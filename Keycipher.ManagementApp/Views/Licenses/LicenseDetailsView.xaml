@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="Keycipher.ManagementApp.Views.Licenses.LicenseDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <TabControl Padding="0" BorderThickness="0">
+        <TabControl.Resources>
+            <Style TargetType="TabPanel">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+        </TabControl.Resources>
+        <TabItem Header="Information">
+            <StackPanel Margin="5">
+                <GroupBox Header="Code">
+                    <TextBlock Margin="2" Text="{Binding Code}" />
+                </GroupBox>
+                <GroupBox Header="License Mode" Margin="2">
+                    <TextBlock Text="{Binding LicenseMode}" />
+                </GroupBox>
+                <GroupBox Header="Hardware Mode" Margin="2">
+                    <TextBlock Text="{Binding HardwareMode}" />
+                </GroupBox>
+                <GroupBox Header="Activation Status" Margin="2">
+                    <TextBlock Text="{Binding ActivationStatus}" />
+                </GroupBox>
+                <GroupBox Header="Expiration Status" Margin="2">
+                    <TextBlock Text="{Binding ExpirationStatus}" />
+                </GroupBox>
+                <GroupBox Header="Ban Status" Margin="2">
+                    <TextBlock Text="{Binding BanStatus}" />
+                </GroupBox>
+                <GroupBox Header="Start Date" Margin="2">
+                    <TextBlock Text="{Binding StartDate}" />
+                </GroupBox>
+                <GroupBox Header="End Date" Margin="2">
+                    <TextBlock Text="{Binding EndDate}" />
+                </GroupBox>
+                <GroupBox Header="Hardware ID" Margin="2">
+                    <TextBlock Text="{Binding HardwareId}" />
+                </GroupBox>
+                <GroupBox Header="Custom Data" Margin="2">
+                    <TextBlock Text="{Binding CustomData}" />
+                </GroupBox>
+                <GroupBox Header="Comment" Margin="2">
+                    <TextBlock Text="{Binding Comment}" />
+                </GroupBox>
+                <GroupBox Header="Activated Date" Margin="2">
+                    <TextBlock Text="{Binding ActivatedDate}" />
+                </GroupBox>
+                <GroupBox Header="Last Logged Date" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedDate}" />
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Activation GeoInformation">
+            <StackPanel Margin="5">
+                <GroupBox Header="IP">
+                    <TextBlock Margin="2" Text="{Binding ActivationGeoLocation.IP}" />
+                </GroupBox>
+                <GroupBox Header="Country Code" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.CountryCode}" />
+                </GroupBox>
+                <GroupBox Header="Country Name" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.CountryName}" />
+                </GroupBox>
+                <GroupBox Header="Region Code" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.RegionCode}" />
+                </GroupBox>
+                <GroupBox Header="Region Name" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.RegionName}" />
+                </GroupBox>
+                <GroupBox Header="City" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.City}" />
+                </GroupBox>
+                <GroupBox Header="Zip Code" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.ZipCode}" />
+                </GroupBox>
+                <GroupBox Header="Time Zone" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.TimeZone}" />
+                </GroupBox>
+                <GroupBox Header="Latitude" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.Latitude}" />
+                </GroupBox>
+                <GroupBox Header="Longitude" Margin="2">
+                    <TextBlock Text="{Binding ActivationGeoLocation.Longitude}" />
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Last Logged GeoInformation">
+            <StackPanel Margin="5">
+                <GroupBox Header="IP">
+                    <TextBlock Margin="2" Text="{Binding LastLoggedGeoLocation.IP}" />
+                </GroupBox>
+                <GroupBox Header="Country Code" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.CountryCode}" />
+                </GroupBox>
+                <GroupBox Header="Country Name" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.CountryName}" />
+                </GroupBox>
+                <GroupBox Header="Region Code" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.RegionCode}" />
+                </GroupBox>
+                <GroupBox Header="Region Name" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.RegionName}" />
+                </GroupBox>
+                <GroupBox Header="City" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.City}" />
+                </GroupBox>
+                <GroupBox Header="Zip Code" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.ZipCode}" />
+                </GroupBox>
+                <GroupBox Header="Time Zone" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.TimeZone}" />
+                </GroupBox>
+                <GroupBox Header="Latitude" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.Latitude}" />
+                </GroupBox>
+                <GroupBox Header="Longitude" Margin="2">
+                    <TextBlock Text="{Binding LastLoggedGeoLocation.Longitude}" />
+                </GroupBox>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+
+</UserControl>

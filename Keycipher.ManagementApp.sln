@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Keycipher.ManagementApp", "Keycipher.ManagementApp\Keycipher.ManagementApp.csproj", "{C663CAC7-56A7-4B99-881F-07B7269CD5D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C663CAC7-56A7-4B99-881F-07B7269CD5D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C663CAC7-56A7-4B99-881F-07B7269CD5D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C663CAC7-56A7-4B99-881F-07B7269CD5D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C663CAC7-56A7-4B99-881F-07B7269CD5D8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8EED21B-5EE5-4DE1-98A9-BF041089BF0B}
+	EndGlobalSection
+EndGlobal

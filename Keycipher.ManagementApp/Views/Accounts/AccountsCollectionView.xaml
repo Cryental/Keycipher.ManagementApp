@@ -1,0 +1,285 @@
+﻿<UserControl x:Class="Keycipher.ManagementApp.Views.Accounts.AccountsCollectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Keycipher.ManagementApp.Views.Accounts"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:viewModels="clr-namespace:Keycipher.ManagementApp.ViewModels.Accounts"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             mc:Ignorable="d"
+             d:DesignHeight="1000" d:DesignWidth="1000"
+             DataContext="{dxmvvm:ViewModelSource viewModels:AccountsCollectionViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <dxmvvm:ObjectToObjectConverter x:Key="OrientationToIsHorizontalConverter">
+                <dxmvvm:MapItem Source="Horizontal" Target="True" />
+                <dxmvvm:MapItem Source="Vertical" Target="False" />
+            </dxmvvm:ObjectToObjectConverter>
+            <dxmvvm:ObjectToObjectConverter x:Key="OrientationToIsVerticalConverter">
+                <dxmvvm:MapItem Source="Horizontal" Target="False" />
+                <dxmvvm:MapItem Source="Vertical" Target="True" />
+            </dxmvvm:ObjectToObjectConverter>
+            <dxmvvm:ObjectToObjectConverter x:Key="CardViewToTrueConverter">
+                <dxmvvm:MapItem Source="CardView" Target="True" />
+                <dxmvvm:MapItem Source="ListView" Target="False" />
+            </dxmvvm:ObjectToObjectConverter>
+            <dxmvvm:ObjectToObjectConverter x:Key="ListViewToTrueConverter">
+                <dxmvvm:MapItem Source="ListView" Target="True" />
+                <dxmvvm:MapItem Source="CardView" Target="False" />
+            </dxmvvm:ObjectToObjectConverter>
+            <dxmvvm:ObjectToObjectConverter x:Key="CollectionViewKindToCardViewVisibilityConverter">
+                <dxmvvm:MapItem Source="ListView" Target="Collapsed" />
+                <dxmvvm:MapItem Source="CardView" Target="Visible" />
+            </dxmvvm:ObjectToObjectConverter>
+            <dxmvvm:ObjectToObjectConverter x:Key="CollectionViewKindToTableViewVisibilityConverter">
+                <dxmvvm:MapItem Source="ListView" Target="Visible" />
+                <dxmvvm:MapItem Source="CardView" Target="Collapsed" />
+            </dxmvvm:ObjectToObjectConverter>
+            <dxmvvm:ObjectToObjectConverter x:Key="CollectionViewKindToBooleanConverter">
+                <dxmvvm:MapItem Source="ListView" Target="True" />
+                <dxmvvm:MapItem Source="CardView" Target="False" />
+            </dxmvvm:ObjectToObjectConverter>
+            <DataTemplate x:Key="AccountCardTemplate">
+                <Grid Width="300" Height="120">
+                    <StackPanel>
+                        <TextBlock Text="Owner" FontSize="14" FontWeight="DemiBold" />
+                        <TextBlock Text="{Binding DataContext.Owner}" />
+                        <TextBlock Text="API Key" FontSize="14" FontWeight="DemiBold" Margin="0,8,0,0" />
+                        <TextBlock Text="{Binding DataContext.APIKey}" />
+                        <TextBlock Text="Products" Margin="0,8,0,0" FontSize="14" FontWeight="DemiBold" />
+                        <TextBlock Text="{Binding DataContext.Products.Count}" />
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService />
+        <dx:WindowedDocumentUIService DocumentShowMode="Dialog" WindowType="dx:ThemedWindow">
+            <dx:WindowedDocumentUIService.WindowStyle>
+                <Style TargetType="dx:ThemedWindow">
+                    <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="TouchOverlap" />
+                    <Setter Property="ShowIcon" Value="False" />
+                    <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                    <Setter Property="ResizeMode" Value="NoResize" />
+                </Style>
+            </dx:WindowedDocumentUIService.WindowStyle>
+        </dx:WindowedDocumentUIService>
+    </dxmvvm:Interaction.Behaviors>
+
+    <DockPanel>
+        <dxr:RibbonControl RibbonStyle="Office2019" DockPanel.Dock="Top" Visibility="Visible">
+            <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+                <dxr:RibbonPage Caption="Home">
+                    <dxr:RibbonPageGroup Caption="">
+                        <dxb:BarButtonItem Content="New Account" Command="{Binding NewCommand}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/NewTask.svg'}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/NewTask.svg'}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup>
+                        <dxb:BarButtonItem Content="Delete" Command="{Binding DeleteCommand}"
+                                           CommandParameter="{Binding SelectedEntity}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Delete.svg'}"
+                                           Glyph="{dx:DXImage 'SvgImages/HybridDemoIcons/BottomPanel/HybridDemo_Delete.svg'}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Actions">
+                        <dxb:BarButtonItem Content="Edit" Command="{Binding EditCommand}"
+                                           CommandParameter="{Binding SelectedEntity}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Dashboards/Edit.svg'}"
+                                           Glyph="{dx:DXImage 'SvgImages/Dashboards/Edit.svg'}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="View">
+                        <dxb:BarButtonItem Content="List" Command="{Binding ViewSettings.ShowListCommand}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Tasks.svg'}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Tasks.svg'}" />
+                        <dxb:BarButtonItem Content="Card" Command="{Binding ViewSettings.ShowCardCommand}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Card.svg'}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Card.svg'}" />
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+                <dxr:RibbonPage Caption="View">
+                    <dxr:RibbonPageGroup Caption="Current View" MergeOrder="0">
+                        <dxb:BarSubItem Content="Change View"
+                                        LargeGlyph="{dx:DXImage 'SvgImages/XAF/Action_Refresh.svg'}"
+                                        Glyph="{dx:DXImage 'SvgImages/XAF/Action_Refresh.svg'}">
+                            <dxb:BarCheckItem Content="List" GroupIndex="5"
+                                              IsChecked="{Binding ViewSettings.ViewKind, Converter={StaticResource ListViewToTrueConverter}}"
+                                              Command="{Binding ViewSettings.ShowListCommand}"
+                                              Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Card.svg'}"
+                                              LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Card.svg'}" />
+                            <dxb:BarCheckItem Content="Card" GroupIndex="5"
+                                              IsChecked="{Binding ViewSettings.ViewKind, Converter={StaticResource CardViewToTrueConverter}}"
+                                              Command="{Binding ViewSettings.ShowCardCommand}"
+                                              Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Card.svg'}"
+                                              LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Card.svg'}" />
+                        </dxb:BarSubItem>
+                        <dxb:BarButtonItem Content="Reset View" Command="{Binding ViewSettings.ResetViewCommand}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/ResetView.svg'}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/ResetView.svg'}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Layout" MergeOrder="1">
+                        <dxb:BarSubItem x:Name="DataPaneBarSubItem" Content="Data Pane"
+                                        LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/DataPanel.svg'}"
+                                        Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/DataPanel.svg'}">
+                            <dxb:BarCheckItem x:Name="HorizontalViewBarCheckItem" GroupIndex="35" Content="Right"
+                                              RibbonStyle="SmallWithText"
+                                              Command="{Binding ViewSettings.DataPaneRightCommand}"
+                                              Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/PanelRight.svg'}"
+                                              LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/PanelRight.svg'}"
+                                              IsChecked="{Binding ViewSettings.Orientation, Converter={StaticResource OrientationToIsHorizontalConverter}}" />
+                            <dxb:BarCheckItem x:Name="VerticalViewBarCheckItem" GroupIndex="35" Content="Bottom"
+                                              RibbonStyle="SmallWithText"
+                                              Command="{Binding ViewSettings.DataPaneBottomCommand}"
+                                              Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/PanelBottom.svg'}"
+                                              LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/PanelBottom.svg'}"
+                                              IsChecked="{Binding ViewSettings.Orientation, Converter={StaticResource OrientationToIsVerticalConverter}}" />
+                            <dxb:BarCheckItem x:Name="IsDataPaneVisibleBarCheckItem" GroupIndex="35" Content="Off"
+                                              Command="{Binding ViewSettings.DataPaneOffCommand}"
+                                              IsChecked="{Binding ViewSettings.IsDataPaneVisible, Converter={dxmvvm:BooleanNegationConverter}}"
+                                              Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/PanelOff.svg'}"
+                                              RibbonStyle="SmallWithText"
+                                              LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/PanelOff.svg'}" />
+                        </dxb:BarSubItem>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup MergeOrder="2" Caption="Data">
+                        <dxb:BarButtonItem x:Name="ReverseSortBarButtonItem" Content="Reverse Sort"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/ReversSort.svg'}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/ReversSort.svg'}"
+                                           RibbonStyle="SmallWithText">
+                            <dxmvvm:Interaction.Behaviors>
+                                <dxmvvm:EventToCommand EventName="ItemClick"
+                                                       Command="{Binding ElementName=tableViewGridControl, Path=View.Commands.ChangeColumnsSortOrder}" />
+                                <dxmvvm:EventToCommand EventName="ItemClick"
+                                                       Command="{Binding ElementName=cardViewGridControl, Path=View.Commands.ChangeColumnsSortOrder}" />
+                            </dxmvvm:Interaction.Behaviors>
+                        </dxb:BarButtonItem>
+                        <dxb:BarButtonItem x:Name="AddColumnsBarButtonItem" Content="Add Columns"
+                                           Command="{Binding ElementName=tableViewGridControl, Path=View.Commands.ShowColumnChooser}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/AddColumn.svg'}"
+                                           IsEnabled="{Binding ViewSettings.ViewKind, Converter={StaticResource CollectionViewKindToBooleanConverter}}" />
+                        <dxb:BarSubItem x:Name="ExpandCollapseBarSubItem" Content="Expand/Collapse"
+                                        Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/ExpandCollapse.svg'}"
+                                        IsEnabled="{Binding ViewSettings.ViewKind, Converter={StaticResource CollectionViewKindToBooleanConverter}}">
+                            <dxb:BarButtonItem Content="Collapse All Groups"
+                                               Command="{Binding ElementName=tableViewGridControl, Path=View.GridViewCommands.CollapseAllGroups}" />
+                            <dxb:BarButtonItem Content="Expand All Groups"
+                                               Command="{Binding ElementName=tableViewGridControl, Path=View.GridViewCommands.ExpandAllGroups}" />
+                        </dxb:BarSubItem>
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom">
+            <dxr:RibbonStatusBarControl.LeftItems>
+                <dxb:BarStaticItem
+                    Content="{Binding Entities.Count, Converter={dxmvvm:FormatStringConverter FormatString='RECORDS: {0}'}}" />
+            </dxr:RibbonStatusBarControl.LeftItems>
+        </dxr:RibbonStatusBarControl>
+        <dxdo:DockLayoutManager>
+            <dxdo:DockLayoutManager.LayoutRoot>
+                <dxdo:LayoutGroup Orientation="{Binding ViewSettings.Orientation}"
+                                  VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="10,10,10,0">
+                    <dxdo:LayoutPanel AllowSizing="True" VerticalScrollBarVisibility="Disabled"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      AllowClose="False" AllowDrag="False" AllowFloat="False" AllowHide="False"
+                                      ShowCaption="False"
+                                      ItemWidth="3*" ItemHeight="*">
+                        <Grid>
+                            <dxg:GridControl x:Name="tableViewGridControl"
+                                             ItemsSource="{Binding Entities}"
+                                             ShowBorder="False"
+                                             SelectedItem="{Binding TableViewSelectedEntity}"
+                                             AutoExpandAllGroups="True"
+                                             Visibility="{Binding ViewSettings.ViewKind, Converter={StaticResource CollectionViewKindToTableViewVisibilityConverter}}">
+                                <dxmvvm:Interaction.Behaviors>
+                                    <dxmvvm:EventToCommand PassEventArgsToCommand="True"
+                                                           Command="{Binding EditCommand}" EventName="MouseDoubleClick">
+                                        <dxmvvm:EventToCommand.EventArgsConverter>
+                                            <dx:EventArgsToDataRowConverter />
+                                        </dxmvvm:EventToCommand.EventArgsConverter>
+                                    </dxmvvm:EventToCommand>
+                                </dxmvvm:Interaction.Behaviors>
+                                <dxg:GridControl.View>
+                                    <dxg:TableView AllowEditing="False" AllowPerPixelScrolling="True"
+                                                   ShowSearchPanelMode="Always" AutoWidth="True"
+                                                   SearchPanelHorizontalAlignment="Right" NavigationStyle="Row"
+                                                   ShowVerticalLines="False" ShowIndicator="False">
+                                        <dxg:TableView.RowCellMenuCustomizations>
+                                            <dxb:BarButtonItem Content="New"
+                                                               Command="{Binding View.DataContext.NewCommand}"
+                                                               Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/ProductSpecificationsSummary.svg'}" />
+                                            <dxb:BarButtonItem Content="Edit"
+                                                               Command="{Binding View.DataContext.EditCommand}"
+                                                               CommandParameter="{Binding Row.Row}"
+                                                               Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/ProductSpecificationsSummary.svg'}" />
+                                            <dxb:BarButtonItem Content="Delete"
+                                                               Command="{Binding View.DataContext.DeleteCommand}"
+                                                               CommandParameter="{Binding Row.Row}"
+                                                               Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Close.svg'}" />
+                                            <dxb:BarButtonItem Content="Refresh"
+                                                               Command="{Binding View.DataContext.RefreshCommand}"
+                                                               Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/ChangeView.svg'}" />
+                                        </dxg:TableView.RowCellMenuCustomizations>
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn IsSmart="True" FieldName="Owner" Header="Account Owner"
+                                                    Visible="True" />
+                                    <dxg:GridColumn IsSmart="True" FieldName="APIKey" Visible="True" Header="API Key" />
+                                    <dxg:GridColumn IsSmart="False" Binding="{Binding Products.Count}" Visible="True">
+                                        <dxg:GridColumn.Header>Products Count</dxg:GridColumn.Header>
+                                        <dxg:GridColumn.EditSettings>
+                                            <dxe:TextEditSettings HorizontalContentAlignment="Left" />
+                                        </dxg:GridColumn.EditSettings>
+                                    </dxg:GridColumn>
+                                </dxg:GridControl.Columns>
+                            </dxg:GridControl>
+                            <dxg:GridControl x:Name="cardViewGridControl"
+                                             ItemsSource="{Binding Entities}"
+                                             ShowBorder="False"
+                                             SelectedItem="{Binding CardViewSelectedEntity}"
+                                             Visibility="{Binding ViewSettings.ViewKind, Converter={StaticResource CollectionViewKindToCardViewVisibilityConverter}}">
+                                <dxmvvm:Interaction.Behaviors>
+                                    <dxmvvm:EventToCommand PassEventArgsToCommand="True"
+                                                           Command="{Binding EditCommand}" EventName="MouseDoubleClick">
+                                        <dxmvvm:EventToCommand.EventArgsConverter>
+                                            <dx:EventArgsToDataRowConverter />
+                                        </dxmvvm:EventToCommand.EventArgsConverter>
+                                    </dxmvvm:EventToCommand>
+                                </dxmvvm:Interaction.Behaviors>
+                                <dxg:GridControl.View>
+                                    <dxg:CardView CardLayout="Rows" ShowSearchPanelMode="Always" ShowGroupPanel="False"
+                                                  SearchPanelHorizontalAlignment="Right"
+                                                  CardHeaderBinding="{Binding Data.Owner, RelativeSource={RelativeSource Mode=Self}}"
+                                                  CardTemplate="{StaticResource AccountCardTemplate}"
+                                                  ShowColumnHeaders="False" />
+                                </dxg:GridControl.View>
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn IsSmart="True" FieldName="Owner" Header="Account Owner"
+                                                    Visible="True" />
+                                    <dxg:GridColumn IsSmart="True" FieldName="APIKey" Visible="False" Header="API Key" />
+                                </dxg:GridControl.Columns>
+                            </dxg:GridControl>
+                        </Grid>
+                    </dxdo:LayoutPanel>
+                    <dxdo:LayoutPanel AllowSizing="True" VerticalScrollBarVisibility="Disabled"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      AllowClose="False" AllowDrag="False" AllowFloat="False" AllowHide="False"
+                                      ShowCaption="False"
+                                      Visibility="{Binding ViewSettings.IsDataPaneVisible, Converter={dxmvvm:BooleanToVisibilityConverter}}"
+                                      ItemWidth="2*" ItemHeight="300" ShowBorder="False">
+                        <local:AccountPanelView DataContext="{Binding AccountPanelViewModel}"
+                                                dxmvvm:ViewModelExtensions.ParentViewModel="{Binding}" />
+                    </dxdo:LayoutPanel>
+                </dxdo:LayoutGroup>
+            </dxdo:DockLayoutManager.LayoutRoot>
+        </dxdo:DockLayoutManager>
+    </DockPanel>
+
+</UserControl>

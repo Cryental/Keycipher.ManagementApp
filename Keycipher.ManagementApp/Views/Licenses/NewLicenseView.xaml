@@ -1,0 +1,92 @@
+﻿<UserControl
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:models="clr-namespace:Keycipher.ManagementApp.Models.Enums"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    x:Class="Keycipher.ManagementApp.Views.Licenses.NewLicenseView"
+    mc:Ignorable="d"
+    Width="300" Height="220">
+    <UserControl.Resources>
+        <dxmvvm:ObjectToObjectConverter x:Key="LicenseModeConverter">
+            <dxmvvm:MapItem Target="True" Source="Subscription" />
+            <dxmvvm:MapItem Target="False" Source="Lifetime" />
+        </dxmvvm:ObjectToObjectConverter>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="150" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <GroupBox Header="License Information" Margin="5">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Licenses Count" />
+                    <dxe:TextEdit VerticalAlignment="Top" Grid.Row="1" MaskType="Numeric" Mask="d"
+                                  Text="{Binding LicensesCount, UpdateSourceTrigger=PropertyChanged}"
+                                  HorizontalAlignment="Left" NullText="Licenses Count" Width="100" />
+
+                    <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="License Mode" />
+                    <dxe:ComboBoxEdit VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                      HorizontalAlignment="Left" Grid.Row="3" IsTextEditable="False"
+                                      EditValue="{Binding LicenseMode,UpdateSourceTrigger=PropertyChanged}" Width="100">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EnumItemsSourceBehavior EnumType="{x:Type models:LicenseMode}"
+                                                            SortMode="DisplayName" />
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxe:ComboBoxEdit>
+
+                    <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="Hardware Mode" />
+                    <dxe:ComboBoxEdit VerticalAlignment="Top" VerticalContentAlignment="Center"
+                                      HorizontalAlignment="Left" Grid.Row="5"
+                                      EditValue="{Binding HardwareMode, UpdateSourceTrigger=PropertyChanged}"
+                                      Width="100">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EnumItemsSourceBehavior EnumType="{x:Type models:HardwareMode}" SortMode="Default" />
+                        </dxmvvm:Interaction.Behaviors>
+                    </dxe:ComboBoxEdit>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Column="1">
+            <GroupBox Header="License Data" Margin="5">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="Expire Hours" />
+                    <dxe:TextEdit Grid.Row="1" MaskType="Numeric" Mask="d"
+                                  IsEnabled="{Binding LicenseMode, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource LicenseModeConverter}}"
+                                  Text="{Binding ExpireHour, UpdateSourceTrigger=PropertyChanged}"
+                                  HorizontalAlignment="Left" NullText="Expire Hours" Width="100"
+                                  VerticalAlignment="Top" />
+
+                    <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Custom Data" />
+                    <dxe:TextEdit Grid.Row="3" Text="{Binding CustomData, UpdateSourceTrigger=PropertyChanged}"
+                                  HorizontalAlignment="Left" NullText="Custom Data" Width="100" VerticalAlignment="Top" />
+
+
+                    <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="Comment" />
+                    <dxe:TextEdit Grid.Row="5" Text="{Binding Comment, UpdateSourceTrigger=PropertyChanged}"
+                                  HorizontalAlignment="Left" NullText="Comment" Width="100" VerticalAlignment="Top" />
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,13 @@
+﻿<Application x:Class="Keycipher.ManagementApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="waitIndicator">
+                <dx:WaitIndicator DeferedVisibility="True" />
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

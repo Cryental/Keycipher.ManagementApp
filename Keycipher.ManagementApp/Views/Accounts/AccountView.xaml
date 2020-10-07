@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Keycipher.ManagementApp.Views.Accounts.AccountView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:Keycipher.ManagementApp.ViewModels.Accounts"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d"
+             d:DesignHeight="1000" d:DesignWidth="1000"
+             Width="500" Height="260"
+             DataContext="{dxmvvm:ViewModelSource viewModels:AccountViewModel}">
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService />
+    </dxmvvm:Interaction.Behaviors>
+    <DockPanel>
+        <dxr:RibbonControl ShowApplicationButton="False" x:Name="ribbonControl" RibbonStyle="Office2019"
+                           DockPanel.Dock="Top">
+            <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+                <dxr:RibbonPage Caption="Home">
+                    <dxr:RibbonPageGroup Caption="Save">
+                        <dxb:BarButtonItem Content="Save" Command="{Binding SaveCommand}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Save.svg'}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Save.svg'}" />
+                        <dxb:BarButtonItem Content="Save &amp; Close" Command="{Binding SaveAndCloseCommand}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/SaveAndClose.svg'}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/SaveAndClose.svg'}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="Close">
+                        <dxb:BarButtonItem Content="Close" Command="{Binding CloseCommand}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Close.svg'}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Close.svg'}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup>
+                        <dxb:BarButtonItem Content="Reset Changes" Command="{Binding ResetCommand}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Reset.svg'}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Reset.svg'}" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup>
+                        <dxb:BarButtonItem Content="Delete" Command="{Binding DeleteCommand}"
+                                           Glyph="{dx:DXImage 'SvgImages/Outlook Inspired/Delete.svg'}"
+                                           LargeGlyph="{dx:DXImage 'SvgImages/Outlook Inspired/Delete.svg'}" />
+                    </dxr:RibbonPageGroup>
+                </dxr:RibbonPage>
+            </dxr:RibbonDefaultPageCategory>
+        </dxr:RibbonControl>
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" />
+        <dxlc:LayoutControl Orientation="Vertical" TextBlock.FontSize="14" x:Name="layoutControl"
+                            HorizontalAlignment="Left" VerticalAlignment="Top">
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand Event="{x:Static Binding.SourceUpdatedEvent}" Command="{Binding UpdateCommand}" />
+            </dxmvvm:Interaction.Behaviors>
+            <dxlc:LayoutGroup Orientation="Horizontal" x:Name="entityGroup" HorizontalAlignment="Left"
+                              VerticalAlignment="Top" Height="auto">
+                <dxlc:LayoutGroup.Style>
+                    <Style TargetType="dxlc:LayoutGroup">
+                        <Setter Property="Height" Value="124" />
+                        <Style.Triggers>
+                            <Trigger Property="dx:ThemeManager.IsTouchEnabled" Value="True">
+                                <Setter Property="Height" Value="238" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </dxlc:LayoutGroup.Style>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem HorizontalAlignment="Stretch" Label="Owner" AddColonToLabel="True">
+                        <dxe:TextEdit Width="200"
+                                      EditValue="{Binding Entity.Owner, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem HorizontalAlignment="Stretch" Label="API Key" AddColonToLabel="True">
+                        <dxe:TextEdit Width="200"
+                                      EditValue="{Binding Entity.APIKey, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+    </DockPanel>
+</UserControl>

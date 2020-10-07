@@ -1,0 +1,15 @@
+﻿<dx:ThemedWindow
+    x:Class="Keycipher.ManagementApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:views="clr-namespace:Keycipher.ManagementApp.Views"
+    Title="Keycipher Licensing Manager"
+    UseLayoutRounding="True"
+    Closing="MainWindow_OnClosing"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized">
+    <Grid>
+        <views:MainView />
+    </Grid>
+</dx:ThemedWindow>
